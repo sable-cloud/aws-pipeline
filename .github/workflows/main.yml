@@ -10,7 +10,7 @@ jobs:
         with:
           files: .
           recursive: true
-          dest: result.zip
+          dest: tmp/result.zip
       - uses: shallwefootball/s3-upload-action@master
         name: Upload S3
         id: S3
@@ -18,4 +18,4 @@ jobs:
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: "testing-build-sablecloud"
-          source_dir: "./result.zip"
+          source_dir: "./tmp/"
