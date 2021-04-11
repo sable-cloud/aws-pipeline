@@ -6,9 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: "Zip application"
-      - uses: actions/checkout@master
+      - uses: papeloto/action-zip@v1
       - id: Zip
-        run: "zip -r app.zip ."
+      with:
+        files: .
+        recursive: true
+        dest: app.zip
       
       - name: "Run a multi-line script"
       - id: Upload
@@ -18,4 +21,4 @@ jobs:
           aws_bucket: testing-build-sablecloud
           aws_key_id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           aws_secret_access_key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          source_dir: app.zip
+          source_dir: ${{ github.workspace }}/app.zip
