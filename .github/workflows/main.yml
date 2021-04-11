@@ -11,7 +11,7 @@ jobs:
           files: .
           recursive: true
           dest: tmp/result.zip
-      - uses: shallwefootball/s3-upload-action@master
+      - uses: jakejarvis/s3-sync-action@master
         name: Upload S3
         id: S3
         with:
