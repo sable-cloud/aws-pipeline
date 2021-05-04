@@ -20,16 +20,3 @@ jobs:
           AWS_S3_BUCKET: "testing-build-sablecloud"
           SOURCE_DIR: "tmp/"
           DEST_DIR: ''
-  build-rhel8:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          target: "*.json"
-        env:
-          PACKER_LOG: 1
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
