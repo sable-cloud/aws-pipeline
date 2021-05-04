@@ -1,0 +1,37 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-east-1",
+    "instance_type": "g4dn.xlarge",
+    "source_ami": "ami-043fbed28a389c721",
+    "ssh_username": "ec2-user",
+    "ssh_timeout": "60m",
+    "ami_name": "packer build {{ user `image_family` }}"
+    }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo dnf install -y python3 python3-pip unzip",
+        "pip3 install awscli --upgrade --user",
+        "source ~/.bashrc"
+      ]
+    },
+    {
+      "type": "shell",
+      "environment_vars": [
+        "image_family={{user `image_family`}}",
+        "aws_access_key_id={{user `aws_access_key_id`}}",
+        "aws_secret_access_key={{user `aws_secret_access_key`}}"
+      ],
+      "inline": [
+        "ls -al"
+        ]
+    }
+  ],
+  "variables": {
+    "aws_access_key_id": "{{ env `AWS_ACCESS_KEY_ID` }}",
+    "aws_secret_access_key": "{{ env `AWS_SECRET_ACCESS_KEY` }}",
+    "image_family": "rhel-8"
+  }
+}
